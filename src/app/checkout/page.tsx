@@ -171,7 +171,7 @@ const Checkout = () => {
               </p>
               <div className="flex mb-4">
                 <Image
-                  src="/images/G2.png"
+                  src="/images/G1.png"
                   alt="Product Image"
                   width={208}
                   height={208}
@@ -179,7 +179,7 @@ const Checkout = () => {
                 />
                 <div className="max-w-[80px]">
                   <p className="text-sm font-medium">
-                    Nike Dri-FIT ADV TechKnit Ultra
+                    Nike Dri-FIT ADV TechKnit Ultra Men's Short-Sleeve Running Top
                   </p>
                   <p className="text-sm">Qty 1 | Size L</p>
                   <p className="text-sm">₹ 3,895.00</p>
