@@ -5,13 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Search, Heart, ShoppingBag, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import Input from '@/components/ui/input';
 import { client } from '@/sanity/lib/client';
 
@@ -28,6 +22,12 @@ export function SiteHeader() {
   const [searchQuery, setSearchQuery] = useState('');
   const [products, setProducts] = useState<any[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
+  const [isClient, setIsClient] = useState(false);
+
+  // Ensure the client-side rendering logic runs only after mounting
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -61,6 +61,9 @@ export function SiteHeader() {
     setSearchQuery('');
     setFilteredProducts(products);
   };
+
+  // Return null during SSR until the component is mounted on the client
+  if (!isClient) return null;
 
   return (
     <header className="w-full">
@@ -115,8 +118,7 @@ export function SiteHeader() {
                 <Link
                   key={item.label}
                   href={item.href}
-                  className={`text-sm font-medium hover:text-gray-600 transition duration-200 ease-in-out ${item.className || ''
-                    }`}
+                  className={`text-sm font-medium hover:text-gray-600 transition duration-200 ease-in-out ${item.className || ''}`}
                 >
                   {item.label}
                 </Link>
@@ -131,7 +133,7 @@ export function SiteHeader() {
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
               <Input
                 type="text"
-                placeholder="Search.."
+                placeholder="Search products..."
                 value={searchQuery}
                 onChange={handleSearch}
                 className="w-60 pl-10 pr-8 rounded-full bg-gray-200 text-[14px]"
@@ -148,18 +150,26 @@ export function SiteHeader() {
                 </Button>
               )}
               {searchQuery && filteredProducts.length > 0 && (
-                <div
-                  className="absolute left-0 bg-white w-full border border-gray-200 rounded-md shadow-lg mt-2 z-10"
-                  style={{ top: '100%' }}
-                >
+                <div className="absolute left-0 bg-white w-full border border-gray-200 rounded-md shadow-lg mt-2 z-10">
                   <ul className="max-h-60 overflow-y-auto">
-                    {filteredProducts.map((product : any) => (
+                    {filteredProducts.map((product: any) => (
                       <li
                         key={product._id}
                         className="px-4 py-2 text-black hover:bg-gray-200 cursor-pointer"
                       >
-                        <Link href={`/products/${product._id}`}>
-                          {product.productName}
+                        <Link href={`/all-products/${product._id}`}>
+                          <div className="flex items-center space-x-2">
+                            {product.imageUrl && (
+                              <Image
+                                src={product.imageUrl}
+                                alt={product.productName}
+                                width={40}
+                                height={40}
+                                className="rounded-md"
+                              />
+                            )}
+                            <span>{product.productName}</span>
+                          </div>
                         </Link>
                       </li>
                     ))}
@@ -233,13 +243,13 @@ export function SiteHeader() {
                   {searchQuery && filteredProducts.length > 0 && (
                     <div className="absolute left-0 bg-white w-full border border-gray-200 rounded-md shadow-lg mt-2 z-10">
                       <ul className="max-h-60 overflow-y-auto">
-                        {filteredProducts.map((product : any) => (
+                        {filteredProducts.map((product: any) => (
                           <li
                             key={product._id}
                             className="px-4 py-2 text-black hover:bg-gray-200 cursor-pointer"
                           >
-                            <Link href={`/Products/${product._id}`}>
-                           {/*    {product.productName} */}
+                            <Link href={`/all-products/${product._id}`}>
+                              {product.productName}
                             </Link>
                           </li>
                         ))}
@@ -253,32 +263,20 @@ export function SiteHeader() {
                     <Link
                       key={item.label}
                       href={item.href}
-                      className={`text-lg font-medium hover:text-gray-600 transition duration-200 ease-in-out ${item.className || ''
-                        }`}
+                      className={`text-lg font-medium hover:text-gray-600 transition duration-200 ease-in-out ${item.className || ''}`}
                     >
                       {item.label}
                     </Link>
                   ))}
                 </nav>
-                <div className="mt-8 space-y-4">
-                  <Link href="#" className="block text-sm hover:underline">
-                    Find a Store
-                  </Link>
-                  <Link
-                    href="/contact-us"
-                    className="block text-sm hover:underline"
+                <div className="mt-6 text-center">
+                  <Button
+                    variant="default"
+                    size="sm"
+                    className="w-full py-2 rounded-full bg-black text-white"
                   >
-                    Help
-                  </Link>
-                  <Link
-                    href="/join-us"
-                    className="block text-sm hover:underline"
-                  >
-                    Join Us
-                  </Link>
-                  <Link href="/sign-in" className="block text-sm hover:underline">
                     Sign In
-                  </Link>
+                  </Button>
                 </div>
               </SheetContent>
             </Sheet>
@@ -288,3 +286,4 @@ export function SiteHeader() {
     </header>
   );
 }
+

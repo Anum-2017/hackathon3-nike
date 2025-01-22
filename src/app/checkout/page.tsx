@@ -205,13 +205,13 @@ const Checkout = () => {
                 Arrives Mon, 27 Mar - Wed, 12 Apr
               </p>
               <div className="flex mb-4">
-                <Image
+               <Image
                   src="/images/G2.png"
                   alt="Product Image"
                   width={208}
                   height={208}
                   className="object-cover mr-4"
-                />
+                /> 
                 <div className="max-w-[80px]">
                   <p className="text-sm font-medium">
                     Nike Dri-FIT ADV TechKnit Ultra
