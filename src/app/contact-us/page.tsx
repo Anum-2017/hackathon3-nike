@@ -12,7 +12,7 @@ import { Button } from '../../components/ui/button';
 
 const Page = () => {
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center px-10 md:px-0">
       <h2 className="uppercase text-xl font-bold mt-8">Get Help</h2>
 
       {/* Search Bar */}
@@ -120,34 +120,34 @@ const Page = () => {
         </div>
 
        {/* Contact Us Section */}
-<div className="col-span-3">
-  <h2 className="uppercase font-bold text-xl text-center mb-6">Contact Us</h2>
+<div className="col-span-12 lg:col-span-3 pt-10 lg:pt-0 space-y-14 px-10">
+  <h2 className="uppercase font-bold text-2xl text-center mb-6">Contact Us</h2>
 
   {/* Phone Section */}
-  <div className="flex flex-col items-center space-y-4 text-center">
-    <Image src={phoneIcon} alt="Phone Icon" width={40} />
+  <div className="flex flex-col items-center space-y-2 text-center">
+    <Image src={phoneIcon} alt="Phone Icon" width={60} />
     <p className="font-semibold">000 800 919 0566</p>
     <p>Products & Orders: 24 hours a day, 7 days a week</p>
     <p>Company Info & Enquiries: 07:30 - 16:30, Monday - Friday</p>
   </div>
 
   {/* Chat Section */}
-  <div className="flex flex-col items-center space-y-4 text-center">
-    <Image src={messageIcon} alt="Chat Icon" width={40} />
+  <div className="flex flex-col items-center space-y-2 text-center">
+    <Image src={messageIcon} alt="Chat Icon" width={60} />
     <p>24 hours a day</p>
     <p>7 days a week</p>
   </div>
 
   {/* Email Section */}
-  <div className="flex flex-col items-center space-y-4 text-center">
-    <Image src={emailIcon} alt="Email Icon" width={40} />
+  <div className="flex flex-col items-center space-y-2 text-center">
+    <Image src={emailIcon} alt="Email Icon" width={60} />
     <p>We’ll reply within</p>
     <p>five business days</p>
   </div>
 
   {/* Store Locator Section */}
-  <div className="flex flex-col items-center space-y-4 text-center">
-    <Image src={locationIcon} alt="Location Icon" width={40} />
+  <div className="flex flex-col items-center space-y-2 text-center">
+    <Image src={locationIcon} alt="Location Icon" width={60} />
     <p className="font-semibold">STORE LOCATOR</p>
     <p>Find Nike retail stores near you</p>
   </div>

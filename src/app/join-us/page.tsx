@@ -41,7 +41,7 @@ const page = () => {
       <p className="text-text-secondary-gray text-center pb-6">By creating an account, you agree to Nike&apos;s <Link className="underline" href="#">Privacy Policy</Link> and <Link className="underline" href="#">Terms of Use</Link>.</p>
       <Button className="rounded-sm py-3 text-white bg-black mb-2">JOIN US</Button>
       <p className="text-center"> <span className="text-text-secondary-gray">Already a Member? </span>
-      <Link href="/Signin">
+      <Link href="/sign-in">
       <span className="underline">Sign in.</span></Link>
       </p>
      

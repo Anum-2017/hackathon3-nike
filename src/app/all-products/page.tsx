@@ -24,7 +24,7 @@ const Page = () => {
         >
           ✕ Hide Filters
         </button>
-        <h3 className="text-2xl">New (500)</h3>
+        <h3 className="text-2xl font-semibold">New (500)</h3>
         <ul className="mt-4">
           <li className="leading-8">
             <Link href="#">Shoes</Link>
@@ -173,3 +173,4 @@ const Page = () => {
 };
 
 export default Page;
+

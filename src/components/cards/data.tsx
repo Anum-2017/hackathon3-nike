@@ -1,5 +1,5 @@
-export const nikeProducts = [
-    {
+ export const nikeProducts = [
+   {
       id: 1,
       tags: "Just In",
       title: "Nike Air Force 1 Mid '07",
@@ -620,4 +620,5 @@ export const nikeProducts = [
       price: "MRP : ₹ 7 995.00",
       imagesUrls: "/images/products/product-69.png",
     }
-]; 
+];  
+ 

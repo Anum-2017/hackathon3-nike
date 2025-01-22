@@ -1,9 +1,9 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Search, Heart, ShoppingBag, Menu } from 'lucide-react';
+import { Search, Heart, ShoppingBag, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Sheet,
@@ -13,10 +13,11 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet';
 import Input from '@/components/ui/input';
+import { client } from '@/sanity/lib/client';
 
 const navItems = [
-  { href: '#', label: 'New & Featured' },
-  { href: '/all-products', label: 'Men' },
+  { href: '/all-products', label: 'New & Featured' },
+  { href: '#', label: 'Men' },
   { href: '#', label: 'Women' },
   { href: '#', label: 'Kids' },
   { href: '#', label: 'Sale', className: 'text-red-500 font-bold' },
@@ -24,7 +25,42 @@ const navItems = [
 ];
 
 export function SiteHeader() {
-  const [isSearchOpen, setIsSearchOpen] = React.useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [products, setProducts] = useState<any[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const data = await client.fetch(
+        `*[_type == "product"]{
+          _id,
+          productName,
+          category,
+          price,
+          "imageUrl": image.asset->url,
+          description
+        }`
+      );
+      setProducts(data);
+      setFilteredProducts(data);
+    };
+    fetchProducts();
+  }, []);
+
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const query = event.target.value.toLowerCase();
+    setSearchQuery(query);
+
+    const filtered = products.filter((product) =>
+      product.productName.toLowerCase().includes(query)
+    );
+    setFilteredProducts(filtered);
+  };
+
+  const clearSearch = () => {
+    setSearchQuery('');
+    setFilteredProducts(products);
+  };
 
   return (
     <header className="w-full">
@@ -79,9 +115,8 @@ export function SiteHeader() {
                 <Link
                   key={item.label}
                   href={item.href}
-                  className={`text-sm font-medium hover:text-gray-600 transition duration-200 ease-in-out ${
-                    item.className || ''
-                  }`}
+                  className={`text-sm font-medium hover:text-gray-600 transition duration-200 ease-in-out ${item.className || ''
+                    }`}
                 >
                   {item.label}
                 </Link>
@@ -91,31 +126,69 @@ export function SiteHeader() {
 
           {/* Right: Search and Icons */}
           <div className="flex items-center space-x-4">
-            {/* Search Box */}
+            {/* Desktop Search Box */}
             <div className="relative hidden lg:block">
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
               <Input
-                type="search"
-                placeholder="Search"
-                className="w-60 pl-10 pr-4 rounded-full bg-gray-100 text-sm"
+                type="text"
+                placeholder="Search.."
+                value={searchQuery}
+                onChange={handleSearch}
+                className="w-60 pl-10 pr-8 rounded-full bg-gray-200 text-[14px]"
               />
+              {searchQuery && (
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="absolute right-1 top-1/2 -translate-y-1/2 h-6 w-6 hover:bg-gray-300 rounded-full"
+                  onClick={clearSearch}
+                  aria-label="Clear search"
+                >
+                  <X className="h-4 w-4 text-gray-500" />
+                </Button>
+              )}
+              {searchQuery && filteredProducts.length > 0 && (
+                <div
+                  className="absolute left-0 bg-white w-full border border-gray-200 rounded-md shadow-lg mt-2 z-10"
+                  style={{ top: '100%' }}
+                >
+                  <ul className="max-h-60 overflow-y-auto">
+                    {filteredProducts.map((product : any) => (
+                      <li
+                        key={product._id}
+                        className="px-4 py-2 text-black hover:bg-gray-200 cursor-pointer"
+                      >
+                        <Link href={`/products/${product._id}`}>
+                          {product.productName}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
+
             {/* Icons */}
             <Button
               variant="ghost"
               size="icon"
-              className="rounded-full lg:hidden"
-              onClick={() => setIsSearchOpen(true)}
-              aria-label="Open search"
+              className="rounded-full"
+              aria-label="Favorites"
             >
-              <Search className="h-5 w-5" />
-            </Button>
-            <Button variant="ghost" size="icon" className="rounded-full" aria-label="Favorites">
               <Heart className="h-5 w-5" />
             </Button>
-            <Button variant="ghost" size="icon" className="rounded-full" aria-label="Shopping bag">
-              <ShoppingBag className="h-5 w-5" />
-            </Button>
+
+            <Link href="/cart">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="rounded-full"
+                aria-label="Shopping bag"
+              >
+                <ShoppingBag className="h-5 w-5" />
+              </Button>
+            </Link>
+
             {/* Mobile Menu */}
             <Sheet>
               <SheetTrigger asChild>
@@ -128,18 +201,60 @@ export function SiteHeader() {
                   <Menu className="h-6 w-6" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-[300px] sm:w-[400px] bg-gray-200 lg:bg-white">
+              <SheetContent
+                side="right"
+                className="w-[300px] sm:w-[400px] bg-gray-200 lg:bg-white"
+              >
                 <SheetHeader>
                   <SheetTitle>Menu</SheetTitle>
                 </SheetHeader>
+
+                {/* Mobile Search Bar */}
+                <div className="relative mt-6 mb-4">
+                  <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+                  <Input
+                    type="text"
+                    placeholder="Search products..."
+                    value={searchQuery}
+                    onChange={handleSearch}
+                    className="w-full pl-10 pr-8 rounded-full bg-white text-[14px]"
+                  />
+                  {searchQuery && (
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="absolute right-1 top-1/2 -translate-y-1/2 h-6 w-6 hover:bg-gray-100 rounded-full"
+                      onClick={clearSearch}
+                      aria-label="Clear search"
+                    >
+                      <X className="h-4 w-4 text-gray-500" />
+                    </Button>
+                  )}
+                  {searchQuery && filteredProducts.length > 0 && (
+                    <div className="absolute left-0 bg-white w-full border border-gray-200 rounded-md shadow-lg mt-2 z-10">
+                      <ul className="max-h-60 overflow-y-auto">
+                        {filteredProducts.map((product : any) => (
+                          <li
+                            key={product._id}
+                            className="px-4 py-2 text-black hover:bg-gray-200 cursor-pointer"
+                          >
+                            <Link href={`/Products/${product._id}`}>
+                           {/*    {product.productName} */}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+
                 <nav className="mt-6 flex flex-col space-y-4">
                   {navItems.map((item) => (
                     <Link
                       key={item.label}
                       href={item.href}
-                      className={`text-lg font-medium hover:text-gray-600 transition duration-200 ease-in-out ${
-                        item.className || ''
-                      }`}
+                      className={`text-lg font-medium hover:text-gray-600 transition duration-200 ease-in-out ${item.className || ''
+                        }`}
                     >
                       {item.label}
                     </Link>
@@ -149,10 +264,16 @@ export function SiteHeader() {
                   <Link href="#" className="block text-sm hover:underline">
                     Find a Store
                   </Link>
-                  <Link href="/contact-us" className="block text-sm hover:underline">
+                  <Link
+                    href="/contact-us"
+                    className="block text-sm hover:underline"
+                  >
                     Help
                   </Link>
-                  <Link href="/join-us" className="block text-sm hover:underline">
+                  <Link
+                    href="/join-us"
+                    className="block text-sm hover:underline"
+                  >
                     Join Us
                   </Link>
                   <Link href="/sign-in" className="block text-sm hover:underline">
@@ -164,23 +285,6 @@ export function SiteHeader() {
           </div>
         </div>
       </div>
-
-      {/* Search Sheet for Mobile */}
-      <Sheet open={isSearchOpen} onOpenChange={setIsSearchOpen}>
-        <SheetContent side="top" className="h-[100px]">
-          <div className="flex items-center h-full">
-            <div className="relative flex-1 px-4">
-              <Search className="absolute left-7 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
-              <Input
-                type="search"
-                placeholder="Search"
-                className="w-full pl-12 pr-4 rounded-full bg-gray-100 text-lg h-12"
-              />
-            </div>
-          </div>
-        </SheetContent>
-      </Sheet>
     </header>
   );
 }
-

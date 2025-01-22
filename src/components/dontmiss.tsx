@@ -1,5 +1,6 @@
 import Image from "next/image"
 import dontmiss from "../../public/images/dont-miss.png"
+import { Button } from "./ui/button"
 
 export default function DontMiss(){
     return(
@@ -18,9 +19,13 @@ export default function DontMiss(){
         <p className="text-[9px] text-center px-2 xl:text-[18px] lg:text-[16px] sm:text-[14px]">Your built-to-last, all-week wears—but with style only Jordan Brand can deliver.</p>
         
         <div className="flex mt-4 justify-center items-center gap-2">
-        <div className="bg-black h-[30px] w-[70px] rounded-full flex justify-center items-center p-4  xl:h-[36px] sm:w-[120px] sm:h-[40px] xl:w-[110px]">
-            <button className="text-white text-[10px] font-medium xl:text-[14px] sm:text-[16px]">Shop</button>
-        </div>
+            <Button
+              variant="outline"
+              size="lg"
+              className="rounded-full border-black bg-black text-white hover:bg-white hover:text-black transition-colors"
+            >
+              Shop
+            </Button>
     </div>
     <div className="mt-4" />  
 </div>

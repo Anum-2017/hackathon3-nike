@@ -47,6 +47,7 @@ const GearUp = () => {
       price: "₹ 3 795",
       image: "/images/G4.png",
     },
+
   ];
 
   return (

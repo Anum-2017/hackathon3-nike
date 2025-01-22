@@ -29,7 +29,8 @@ const page = () => {
         </div>
         <p className="text-text-secondary-gray text-center pb-6">By logging in, you agree to Nike&apos;s <Link className="underline" href="#">Privacy Policy</Link> and <Link className="underline" href="#">Terms of Use</Link>.</p>
         <Button className="rounded-sm py-3 text-white bg-black mb-2">SIGN IN</Button>
-        <p className="text-center"> <span className="text-text-secondary-gray">Not a Member? </span><span className="underline">Join Us.</span></p>
+        <p className="text-center"> <span className="text-text-secondary-gray">Not a Member? </span><Link href="join-us" className="underline">Join Us.</Link>
+        </p>
       </form>
     </div>
   );

@@ -29,14 +29,14 @@ export function ProductHero() {
           <div className="flex flex-wrap justify-center gap-4">
             <Button
               variant="outline"
-              className="rounded-full border-white bg-black px-8 py-3 text-white hover:bg-white hover:text-black"
+              className="rounded-full px-12 py-6 border-black bg-black text-white hover:bg-white hover:text-black transition-colors"
               aria-label="Notify Me about Air Max Pulse"
             >
               Notify Me
             </Button>
             <Button
               variant="outline"
-              className="rounded-full border-white bg-black px-8 py-3 text-white hover:bg-white hover:text-black"
+              className="rounded-full px-12 py-6 border-black bg-black text-white hover:bg-white hover:text-black transition-colors"
               aria-label="Shop Air Max Pulse"
             >
               Shop Air Max
