@@ -28,7 +28,7 @@ const products: Product[] = [
     price: 13995,
     imageUrl: "/images/best3.png",
   },
-  {
+   {
     id: "3",
     name: "Nike Air Max 97 SE",
     category: "Men's Shoes",
@@ -41,7 +41,7 @@ const products: Product[] = [
     category: "Women's Shoes",
     price: 15995,
     imageUrl: "/images/best1.png",
-  },
+  }, 
 ]
 
 export default function ProductCarousel() {

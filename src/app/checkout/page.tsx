@@ -173,6 +173,8 @@ const Checkout = () => {
                   <Image
                     src={item.image}
                     alt={item.productName}
+                    width={100}  // You can adjust the width
+                    height={100} // Adjust the height as well
                     className="w-20 h-20 rounded-md object-cover"
                   />
                   <div className="flex-1">
@@ -231,7 +233,7 @@ const Checkout = () => {
                 <div className="max-w-[80px]">
                   <p className="text-sm font-medium">Nike Air Max 97 SE</p>
                   <p className="text-sm">Qty 1 | Size UK 8</p>
-                  <p className="text-sm">₹ 16,995.00</p>
+                  <p className="text-sm">₹ 8,595.00</p>
                 </div>
               </div>
             </div>
@@ -241,6 +243,5 @@ const Checkout = () => {
     </div>
   );
 };
-
 
 export default Checkout;

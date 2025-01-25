@@ -70,7 +70,6 @@ const ProductList = () => {
           price={product.price}
           colors={product.colors}     
           imageUrl={product.imageUrl}
-          
         />
       ))}
     </div>
@@ -78,3 +77,5 @@ const ProductList = () => {
 };
 
 export default ProductList;
+
+

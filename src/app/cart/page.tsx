@@ -45,6 +45,13 @@ const CartPage = () => {
 
             {cart.length === 0 ? (
               <div className="text-center">
+                <Image
+                  src="/images/Cart_Empty.jpg" 
+                  alt="EmptyCart"
+                  width={300}
+                  height={300}
+                  className="mx-auto mb-4"
+                />
                 <p className="mb-4">Your cart is empty. Start shopping now!</p>
                 <Link href="/">
                   <button className="bg-black text-white rounded-full px-6 py-3 hover:bg-gray-800 transition">
@@ -66,7 +73,7 @@ const CartPage = () => {
                       height={50}
                       className="w-24 h-24 md:w-32 md:h-32 object-cover rounded-md"
                     />
-                    
+
                     <div>
                       <h3 className="text-lg font-medium mb-2">{item.productName}</h3>
                       <div className="text-lg text-gray-600">
@@ -115,12 +122,15 @@ const CartPage = () => {
                       </div>
 
                       <div className="flex items-center mt-2">
-                        <button
-                          aria-label="Add to Wishlist"
-                          className="rounded-full p-2 hover:bg-gray-100"
-                        >
-                          <Heart className="h-5 w-5" />
-                        </button>
+                        <Link href="/wishlist">
+                          <button
+                            aria-label="Add to Wishlist"
+                            className="rounded-full p-2 hover:bg-gray-100"
+                          >
+                            <Heart className="h-5 w-5" />
+                          </button>
+                        </Link>
+
                         <button
                           aria-label="Remove from Cart"
                           onClick={() => removeFromCart(item.id)}
@@ -168,4 +178,3 @@ const CartPage = () => {
 };
 
 export default CartPage;
-
