@@ -24,7 +24,7 @@ export function SiteHeader() {
   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
   const [isClient, setIsClient] = useState(false);
 
-  // Ensure the client-side rendering logic runs only after mounting
+  // Ensure client-side rendering logic runs only after mounting
   useEffect(() => {
     setIsClient(true);
   }, []);
@@ -179,22 +179,12 @@ export function SiteHeader() {
             </div>
 
             {/* Icons */}
-            <Button
-              variant="ghost"
-              size="icon"
-              className="rounded-full"
-              aria-label="Favorites"
-            >
+            <Button variant="ghost" size="icon" className="rounded-full" aria-label="Favorites">
               <Heart className="h-5 w-5" />
             </Button>
 
             <Link href="/cart">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="rounded-full"
-                aria-label="Shopping bag"
-              >
+              <Button variant="ghost" size="icon" className="rounded-full" aria-label="Shopping bag">
                 <ShoppingBag className="h-5 w-5" />
               </Button>
             </Link>
@@ -246,10 +236,19 @@ export function SiteHeader() {
                         {filteredProducts.map((product: any) => (
                           <li
                             key={product._id}
-                            className="px-4 py-2 text-black hover:bg-gray-200 cursor-pointer"
+                            className="flex items-center space-x-2 px-4 py-2 text-black hover:bg-gray-200 cursor-pointer"
                           >
-                            <Link href={`/all-products/${product._id}`}>
-                              {product.productName}
+                            <Link href={`/all-products/${product._id}`} className="flex items-center space-x-2">
+                              {product.imageUrl && (
+                                <Image
+                                  src={product.imageUrl}
+                                  alt={product.productName}
+                                  width={40}
+                                  height={40}
+                                  className="rounded-md"
+                                />
+                              )}
+                              <span>{product.productName}</span>
                             </Link>
                           </li>
                         ))}
