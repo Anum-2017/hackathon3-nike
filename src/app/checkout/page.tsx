@@ -3,6 +3,7 @@
 import { useCart } from "@/contexts/CartContext";
 import { useState } from "react";
 import Image from 'next/image';
+import Link from "next/link";
 
 const Checkout = () => {
   const [pan, setPan] = useState("");
@@ -138,11 +139,12 @@ const Checkout = () => {
             >
               Continue
             </button>
+            <Link href="/stripe-testing">
             <button
               className="w-full h-[55px] bg-[#d9dada] text-[#515050] rounded-3xl font-medium mt-4">
-              {/* onClick={() => alert("Continue clicked!") */}
               Payment
             </button>
+            </Link>
             <div className="space-y-4 mt-8 w-full">
               <p className="border-b-[1.5px] border-[#d1d2d2] pb-4 text-black font-medium">
                 Delivery

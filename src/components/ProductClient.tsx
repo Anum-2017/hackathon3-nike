@@ -2,8 +2,9 @@
 
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
-import { useCart } from '@/contexts/CartContext'; // Import the context
-import { useState } from 'react'; // Import useState to manage notification state
+import { useCart } from '@/contexts/CartContext';
+import { useState } from 'react'; 
+import { Heart } from 'lucide-react';
 
 interface Product {
   _id: string;
@@ -17,7 +18,7 @@ interface Product {
 
 const ProductClient = ({ product }: { product: Product }) => {
   const { addToCart } = useCart();
-  const [notification, setNotification] = useState<string>(''); // State for notification
+  const [notification, setNotification] = useState<string>(''); 
 
   const handleAddToCart = () => {
     const cartItem = {
@@ -29,7 +30,7 @@ const ProductClient = ({ product }: { product: Product }) => {
     };
     addToCart(cartItem);
     setNotification(`${product.productName} added to cart successfully!`); // Set notification
-    setTimeout(() => setNotification(''), 3000); // Clear notification after 3 seconds
+    setTimeout(() => setNotification(''), 3000); 
   };
 
   return (
@@ -51,13 +52,14 @@ const ProductClient = ({ product }: { product: Product }) => {
       <div className='col-span-12 md:col-span-6 pr-18 pt-10 md:pt-0'>
         <h1 className='text-3xl font-bold'>{product.productName}</h1>
         <p className='py-10 text-lg'>{product.description}</p>
+        
         <h2 className="text-2xl focus-visible:outline-none mb-4">
           <span className="font-bold">Price:</span> &#8377; {product.price}
         </h2>
         {product.colors && (
           <div className="mb-4">
             <div className="flex items-center gap-4">
-              <h2 className="text-black">Available Colors:</h2>
+              <h2 className="text-black font-medium">Available Colors:</h2>
               <div className="flex gap-2">
                 {product.colors.map((color, index) => (
                   <span
@@ -72,11 +74,15 @@ const ProductClient = ({ product }: { product: Product }) => {
         )}
 
         <div className='flex mt-6'>
-          <Button 
-          onClick={handleAddToCart} 
-          className="rounded-full bg-black px-12 py-6 text-white text-lg">
+          <Button onClick={handleAddToCart} 
+          className="rounded-full bg-black px-12 py-6 text-white text-lg mr-4">
             Add to cart
-            </Button>
+          </Button>
+
+          <Button variant="ghost" size="icon" className="w-12 h-12 rounded-full" aria-label="wishlist">
+             <Heart className="h-7 w-7" />
+          </Button>
+
         </div>
         {notification && (
           <div className="mt-4 p-4 bg-green-500 text-white rounded-md">

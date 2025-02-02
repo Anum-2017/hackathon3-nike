@@ -122,14 +122,12 @@ const CartPage = () => {
                       </div>
 
                       <div className="flex items-center mt-2">
-                        <Link href="/wishlist">
                           <button
                             aria-label="Add to Wishlist"
                             className="rounded-full p-2 hover:bg-gray-100"
                           >
                             <Heart className="h-5 w-5" />
                           </button>
-                        </Link>
 
                         <button
                           aria-label="Remove from Cart"
@@ -178,3 +176,5 @@ const CartPage = () => {
 };
 
 export default CartPage;
+
+

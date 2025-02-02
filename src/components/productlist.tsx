@@ -7,12 +7,11 @@ import { client } from '../sanity/lib/client';
   productName: string;
   category: string;
   price: string;
-  inventory: number;
+  inventory: number; 
   colors: string[];
   imageUrl: string;
   description: string;
 }
-
 
 const ProductList = () => {
     const [products, setProducts] = useState<Product[]>([]);
@@ -25,13 +24,13 @@ const ProductList = () => {
           *[_type == "product"]{
             _id,
             productName,
-            category,
+            category, 
             price,
             inventory,
             colors,
-            status,
+            status, 
             "imageUrl": image.asset->url,
-            description
+            description 
           }
         `;
   
@@ -65,8 +64,8 @@ const ProductList = () => {
           key={product._id}
           id={product._id} 
           productName={product.productName}
-          category={product.category}
-          description={product.description}
+          category={product.category} 
+          description={product.description} 
           price={product.price}
           colors={product.colors}     
           imageUrl={product.imageUrl}
@@ -77,5 +76,3 @@ const ProductList = () => {
 };
 
 export default ProductList;
-
-
