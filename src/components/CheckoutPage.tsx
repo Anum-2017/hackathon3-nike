@@ -43,11 +43,23 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
       return;
     }
 
+    // const { error } = await stripe.confirmPayment({
+    //   elements,
+    //   clientSecret,
+    //   confirmParams: {
+    //     return_url: `https://hackathon3-nike.vercel.app/payment-success?amount=${amount}`,
+    //   },
+    // });
+
+    const returnUrl = process.env.NODE_ENV === 'production'
+      ? process.env.NEXT_PUBLIC_RETURN_URL_VERCEL
+      : process.env.NEXT_PUBLIC_RETURN_URL_LOCAL;
+
     const { error } = await stripe.confirmPayment({
       elements,
       clientSecret,
       confirmParams: {
-        return_url: `https://hackathon3-nike.vercel.app/payment-success?amount=${amount}`,
+        return_url: `${returnUrl}?amount=${amount}`,
       },
     });
 
@@ -95,5 +107,3 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
 };
 
 export default CheckoutPage;
-
-
