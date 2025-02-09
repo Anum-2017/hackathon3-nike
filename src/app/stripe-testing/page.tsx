@@ -17,10 +17,10 @@ export default function Home() {
       (acc, item) => acc + Number(item.price) * Number(item.quantity),
       0
     );
- // const amount = 49.99;
+    
 
   return (
-    <main className="max-w-6xl mx-auto p-10 text-black text-center border m-10 rounded-md bg-white">
+    <main className="max-w-6xl mx-auto p-10 text-white text-center border m-10 rounded-md bg-black">
       <div className="mb-10">
         <h1 className="text-4xl font-extrabold mb-2"> NIKE</h1>
         <h2 className="text-2xl">
@@ -42,4 +42,3 @@ export default function Home() {
     </main>
   );
 }
-
