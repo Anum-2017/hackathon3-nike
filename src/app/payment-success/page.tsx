@@ -15,7 +15,7 @@ function PaymentSuccess() {
         <h1 className="text-4xl font-extrabold mb-2">PAYMENT RECEIVED</h1>
         <h2 className="text-2xl">Your Order is Confirmed</h2>
 
-        <div className="bg-white p-2 rounded-xl text-white text-3xl font-bold">
+        <div className="bg-white p-2 rounded-xl text-black text-3xl font-bold">
           Payment Success! Total: ₹  {amount}
         </div>
       </div>
